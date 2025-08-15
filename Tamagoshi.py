@@ -6,17 +6,21 @@ class Tamaghosi:
         self.idade = 0
         self.tedio = 0
 
+    # Reduz a fome proporcionalmente a quantidade real. Exemplo: se a fome for 50 e a quantidade for 50%, a fome fome será 25
     def alimentar(self, quantidade):
         if (quantidade >= 0) and (quantidade <= 100):
             self.fome -= self.fome * (quantidade / 100)
 
+    # Retorna o tédio proporcionalmente à quantidade de brincadeira
     def brincar(self, quantidade):
         if (quantidade >= 0) and (quantidade <= 100):
             self.tedio -= self.tedio * (quantidade / 100)
 
+    # Retorna um número representando o humor do bichinho. Quanto menor a fome e o tédio, melhor o humor.
     def getHumor(self):
         return 100 - ((self.fome + self.tedio) / 2)
 
+    # Diminui a saúde do bichinho conforme as condições de fome (quanto mais alta, pior)
     def vida(self):
         if ((self.fome > 50 and self.fome <= 60)) or ((self.tedio > 50 and self.tedio <= 60)):
             self.saude -= 10
@@ -31,7 +35,7 @@ class Tamaghosi:
             print("Seu bichinho morreu 😭")
 
     def tempoPassando(self):
-        self.vida()
-        self.idade += 0.2
-        self.tedio += 2.5
+        self.vida() # Atualiza a saúde baseado na sua fome e tédio atuais
+        self.idade += 0.2 # O tempo passa e o pet envelhece
+        self.tedio += 2.5 # Aumenta o tédio com o passar do tempo
         self.fome -= 5
