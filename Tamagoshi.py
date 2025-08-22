@@ -29,10 +29,10 @@ class Tamaghosi:
         elif ((self.fome > 80 and self.fome <= 90)) or ((self.tedio > 80 and self.tedio <= 60)):
             self.saude -= 50
         elif (self.fome > 90) or (self.tedio > 90):
-            print("Estou morrendo.......AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH 💀")
+            print("Estou morrendo.......AHHHHHH 💀")
         elif (self.fome > 99) or (self.tedio > 99):
             self.saude = 0
-            print("Seu bichinho morreu 😭")
+            print("Seu bichinho morreu ⚰️")
 
     def tempoPassando(self):
         self.vida() # Atualiza a saúde baseado na sua fome e tédio atuais
