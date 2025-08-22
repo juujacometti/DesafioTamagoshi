@@ -52,6 +52,16 @@ def main():
 # Looping principal do jogo
 def rodarJogo(pet):
     while True:
+
+        # Checa se o pet já morreu
+        if pet.saude <= 0 or pet.fome >= 100:
+            apagar_estado()  # Apaga o JSON
+            print("Você precisará criar um novo pet para continuar jogando.")
+            return  # Volta para o main()
+        
+        if pet.fome >= 80 and pet.fome <= 99 or pet.saude <= 20 and pet.saude >= 5:
+            print("Eu estou morrendo, me ajude 😪🙏")
+            pet.statusPet()
         
         print("\nO que deseja fazer agora?")
         pet.acoes()
@@ -91,10 +101,4 @@ def rodarJogo(pet):
             apagar_estado()
             break 
         
-
-    
-
-
-
-
 main()

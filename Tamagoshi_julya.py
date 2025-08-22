@@ -20,9 +20,9 @@ class Tamagoshi:
         
     def statusPet(self):
         print(f"\n{25 * '='}\nSTATUS DE: {self.nome}")
-        print(f"😋 Fome: {self.fome}")
+        print(f"😋 Fome: {self.fome:.2f}")
         print(f"😷 Saúde: {self.saude}")
-        print(f"🙄 Tédio: {self.tedio}")
+        print(f"🙄 Tédio: {self.tedio:.2f}")
         self.humor()
         print(f"📏 Idade: {self.idade}")
         if isinstance(self, Aquati):
@@ -100,25 +100,35 @@ class Tamagoshi:
     # Verifica a vida (ESTÁ IGUAL AO DA MARI, NÃO MEXI)
     # Diminui a saúde do bichinho conforme as condições de fome (quanto mais alta, pior)
     def vida(self):
-        if 50 < self.fome <= 60 or 50 < self.tedio <= 60:
-            self.saude -= 10
-        elif 60 < self.fome <= 80 or 60 < self.tedio <= 80:
-            self.saude -= 30
-        elif 80 < self.fome <= 90 or 80 < self.tedio <= 90:
-            self.saude -= 50
-        elif self.fome > 90 or self.tedio > 90:
-            print("Estou morrendo.......AHHHHHH 💀")
+    # Reduz a saúde dependendo da fome e tédio
+        if self.fome > 90 or self.tedio > 90:
             self.saude = 0
-            print("Seu bichinho morreu ⚰️")
+        elif self.fome > 80 or self.tedio > 80:
+            self.saude -= 50
+        elif self.fome > 60 or self.tedio > 60:
+            self.saude -= 30
+        elif self.fome > 50 or self.tedio > 50:
+            self.saude -= 10
+        
+        # Garante que a saúde nunca fique negativa
+        self.saude = max(0, self.saude)
+        
+        if self.saude == 0 or self.fome >= 100:
+            print("💀 Seu bichinho morreu ⚰️")
+            return True  # podemos retornar True pra indicar que morreu
+        return False
+
 
             
     
     # Verifica o passar do tempo (ESTÁ IGUAL AO DA MARI, NÃO MEXI)
     def tempoPassando(self):
-        self.vida() # Atualiza a saúde baseado na sua fome e tédio atuais
-        self.idade += 0.2 # O tempo passa e o pet envelhece
+        morreu = self.vida()
+        if morreu:
+            return # Sai da função se morreu
+        self.idade += 1 # O tempo passa e o pet envelhece
         self.tedio += 2.5 # Aumenta o tédio com o passar do tempo
-        self.fome += 5
+        self.fome += 2.5
 
 
 # ====== Criação de raças ======
