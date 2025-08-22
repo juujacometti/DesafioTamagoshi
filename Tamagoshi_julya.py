@@ -51,7 +51,7 @@ class Tamagoshi:
                     print("Brincadeira cancelada")
         else:
             print(f"{self.nome} não está com tédio.") 
-        print(f"Nível de fome: {self.fome}")    # Informação para o usuário
+        print(f"Nível de tédio: {self.fome}")    # Informação para o usuário
 
     
     # Verifica as condições de alimentação
@@ -97,6 +97,10 @@ class Tamagoshi:
     def dormir(self):
         self.dormindo = True
         print(f"{self.nome} está dormindo agora... 😴")
+        
+    def acordar(self):
+        self.dormindo = False
+        print(f"{self.nome} está acordado! 🌞")
         
     
     # Verifica a vida (ESTÁ IGUAL AO DA MARI, NÃO MEXI)
