@@ -1,5 +1,5 @@
 import os
-from Tamagoshi_julya import *
+from Tamagoshi import *
 
 # ====== Função para apagar pet salvo ======
 def apagar_estado():
@@ -58,10 +58,6 @@ def rodarJogo(pet):
             apagar_estado()  # Apaga o JSON
             print("Você precisará criar um novo pet para continuar jogando.")
             return  # Volta para o main()
-        
-        if pet.fome >= 80 and pet.fome <= 99 or pet.saude <= 20 and pet.saude >= 5:
-            print("Eu estou morrendo, me ajude 😪🙏")
-            pet.statusPet()
         
         print("\nO que deseja fazer agora?")
         pet.acoes()
