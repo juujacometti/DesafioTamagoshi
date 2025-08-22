@@ -3,7 +3,8 @@
 # o benefício das outras 2 raças (yasme)
 # os desafios (função dormir realizada, falta a de acordar e linkar elas) (julya e yasme) 
 # definição de função de vida, tempo (yasme)
-# chamar todas as funções para funcionamento do jogoj
+# chamar todas as funções para funcionamento do jogo e incluir coisas que você alterar
+
 
 # ====== Classe mãe ======
 class Tamagoshi:
@@ -14,6 +15,18 @@ class Tamagoshi:
         self.idade = 0
         self.tedio = 0
         self.dormindo = False
+        
+    def statusPet(self):
+        print(f"\n{25 * '='}\nSTATUS DE {self.nome}")
+        print(f"😋 Fome: {self.fome}")
+        print(f"😷 Saúde: {self.saude}")
+        print(f"🙄 Tédio: {self.tedio}")
+        print(f"🤔 Humor: {self.humor()}")
+        print(f"📏 Idade: {self.idade}")
+        if isinstance(self, Aquati):
+            print(f"💧 Hidratação: {self.hidratacao}")
+        elif isinstance(self, Fuegui):
+            print(f"Calor: {self.calor}")
 
 
     # Verifica as condições da brincadeira
@@ -38,6 +51,7 @@ class Tamagoshi:
                     print("Brincadeira cancelada")
         else:
             print(f"{self.nome} não está com tédio.") 
+        print(f"Nível de fome: {self.fome}")    # Informação para o usuário
 
     
     # Verifica as condições de alimentação
@@ -62,6 +76,7 @@ class Tamagoshi:
                     print("Alimentação cancelada")
         else:
             print(f"{self.nome} não está com fome!")
+        print(f"Nível de fome: {self.fome}")    # Informação para o usuário
     
     
     # Verifica o humor
@@ -111,9 +126,8 @@ class Tamagoshi:
 # ====== Criação de raças ======
 #Raça de água
 class Aquati(Tamagoshi): 
-    def __init__(self, nome, cor):
-        super().__init__(nome)    # Chamada do construtor da classe mãe
-        self.cor = cor   
+    def __init__(self, nome):
+        super().__init__(nome)    # Chamada do construtor da classe mãe  
         self.hidratacao = 100    # Definição de atributos específicos da raça
         
     # Necessidade específica da raça
@@ -124,9 +138,8 @@ class Aquati(Tamagoshi):
         
 # Raça de fogo
 class Fuegui(Tamagoshi):
-    def __init__(self, nome, cor):
+    def __init__(self, nome):
         super().__init__(nome)    # Chamada do construtor da classe mãe
-        self.cor = cor
         self.calor = 100    # Definição de atributos específicos da raça
         
      # Necessidade específica da raça
@@ -143,19 +156,43 @@ class Fuegui(Tamagoshi):
         
 # ====== Funcionamento do jogo ======
 def main():
-    print(f"{20 * '='}\n🌱🌪️ PET VIRTUAL 💧🔥\n{20 * '='}")
+    # Interações iniciais
+    print(f"{25 * '='}\n  🌱🌬️  PET VIRTUAL 💧🔥 \n")
+    nome = input("=> Informe o nome do seu novo pet: ")
+    
+    escolhaRaca = int(input(f"=> Escolha a raça de {nome}:\n\n1 - Aquati (Água 💧)\n  * Possui vantagem com as brincadeiras\n  * Necessidade especial: Hidratação\n\n2 - Fuegui (Fogo 🔥)\n  * Possui vantagem com a alimentação\n  * Necessidade especial: Calor\n\n3 - \n\n4 -\n\nInforme sua escolha (1, 2, 3 ou 4): "))
+    # Condição para raça específica
+    if escolhaRaca == 1:
+        pet = Aquati(nome)
+    elif escolhaRaca == 2:
+        pet = Fuegui(nome)
+
+    
+    # Looping principal do jogo
+    while True:
+        pet.statusPet()
+        
+        print("\nO que você deseja fazer?")
+        print("1 - Alimentar")
+        print("2 - Brincar")
+        print("3 - Ver humor")
+        print("4 - Passar o tempo")
+        print("5 - Ação especial da raça")
+        print("6 - Sair (pet vai dormir)")
+
+    
+
+
+
+
+main()
 
 
 
 
 
 
-
-
-
-
-
-
+# Retirar daqui
 # Listas (brincadeiras, comida)
                     # Água            Terra               Ar                Fogo               
 listaBrincadeiras = ["Ir na piscina", "Castelo de areia", "Soltar pipa", "Jogar queimada", "Video game", "Cancelar escolha"]
