@@ -27,6 +27,19 @@ class Tamagoshi:
             print(f"💧 Hidratação: {self.hidratacao}")
         elif isinstance(self, Fuegui):
             print(f"Calor: {self.calor}")
+            
+            
+    def acoes(self):
+        listaAcao = [f"1 - 🥗 Alimentar", "2 - 🕹️ Brincar", "3- ⏳ Passar o tempo", "Necessidade da raça", "5 - ❌ Sair (o pet irá dormir)"]
+        
+        if isinstance(self, Aquati):
+            listaAcao[3] = "4 - 💧 Hidratar"
+        elif isinstance(self, Fuegui):
+            listaAcao[3] = "4 - 🔥 Esquentar"
+        
+        
+        print(listaAcao)
+        
 
 
     # Verifica as condições da brincadeira
@@ -174,15 +187,13 @@ def main():
     
     # Looping principal do jogo
     while True:
-        pet.statusPet()
         
-        print("\nO que você deseja fazer?")
-        print("1 - Alimentar")
-        print("2 - Brincar")
-        print("3 - Ver humor")
-        print("4 - Passar o tempo")
-        print("5 - Ação especial da raça")
-        print("6 - Sair (pet vai dormir)")
+        pet.statusPet()
+        pet.acoes()
+        
+        
+        
+        escolhaAcao = int(input("x "))
 
     
 
@@ -197,10 +208,12 @@ main()
 
 
 # Retirar daqui
-# Listas (brincadeiras, comida)
+# Listas (ação, brincadeiras, comida)
                     # Água            Terra               Ar                Fogo               
 listaBrincadeiras = ["Ir na piscina", "Castelo de areia", "Soltar pipa", "Jogar queimada", "Video game", "Cancelar escolha"]
 listaComidas = ["Gelatina", "Batata", "Pipoca", "Pimenta", "Sorvete", "Cancelar alimentação"]
+
+
 
 
 
