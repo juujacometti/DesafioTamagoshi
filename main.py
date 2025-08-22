@@ -10,7 +10,7 @@ def main():
     nome = input("=> Informe o nome do seu novo pet: ")
 
     print("Que nome lindo!\n\nAgora, escolha a raça dele(a):")
-    escolhaRaca = int(input(f"=> Escolha a raça de {nome}:\n\n1 - Aquati (Água 💧)\n  * Possui vantagem com as brincadeiras\n  * Necessidade especial: Hidratação\n\n2 - Fuegui (Fogo 🔥)\n  * Possui vantagem com a alimentação\n  * Necessidade especial: Calor\n\n3 - \n\n4 -\n\nInforme sua escolha (1, 2, 3 ou 4): "))
+    escolhaRaca = int(input(f"=> Escolha a raça de {nome}:\n\n1 - Aquati (Água 💧)\n  * Possui vantagem com as brincadeiras\n  * Necessidade especial: Hidratação\n\n2 - Fuegui (Fogo 🔥)\n  * Possui vantagem com a alimentação\n  * Necessidade especial: Calor\n\n3 - Ari (Ar 💨)\n  * Possui vantagem com\n  * Necessidade especial: Refrescancia\n\n4 -\n\nInforme sua escolha (1, 2, 3 ou 4): "))
     
     # Condição para raça específica
     if escolhaRaca == 1:

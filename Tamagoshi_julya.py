@@ -118,7 +118,7 @@ class Tamagoshi:
         self.vida() # Atualiza a saúde baseado na sua fome e tédio atuais
         self.idade += 0.2 # O tempo passa e o pet envelhece
         self.tedio += 2.5 # Aumenta o tédio com o passar do tempo
-        self.fome -= 5
+        self.fome += 5
 
 
 # ====== Criação de raças ======
@@ -127,6 +127,17 @@ class Aquati(Tamagoshi):
     def __init__(self, nome):
         super().__init__(nome)    # Chamada do construtor da classe mãe  
         self.hidratacao = 100    # Definição de atributos específicos da raça
+
+    def brincar(self, escolhaBrincadeira):
+        if escolhaBrincadeira == 1:    # Brincadeira que envolve água diminui o tédio mais rápido
+            self.tedio = max(0, self.tedio - 30)    # Garante que o valor não seja negativo, caso fique, será substituído para zero
+            print(f"{self.nome} fez sua brincadeira favorita! 🤩")
+        elif escolhaBrincadeira in [2, 3, 4]:    # Brincadeiras 'favoritas' de outras raças
+            self.tedio = max(0, self.tedio - 15)
+        elif escolhaBrincadeira == 5:    # Brincadeira genérica
+            self.tedio = max(0, self.tedio - 10)
+        elif escolhaBrincadeira == 6:    # Cancelar escolha de brincadeiras
+            print("Brincadeira cancelada.")
 
     def nadar(self):
         self.tedio -= 15
@@ -145,6 +156,17 @@ class Fuegui(Tamagoshi):
     def __init__(self, nome):
         super().__init__(nome)    # Chamada do construtor da classe mãe
         self.calor = 100    # Definição de atributos específicos da raça
+
+    def alimentar(self, escolhaComida):
+        if escolhaComida in [1, 2, 3]:
+            self.fome = max(0, self.fome - 15)
+        elif escolhaComida == 4:
+            self.fome = max(0, self.fome - 25)
+            print(f"{self.nome} comeu sua comida favorita! 🤩")
+        elif escolhaComida == 5:
+            self.fome = max(0, self.fome - 10)
+        elif escolhaComida == 6:
+            print("Alimentação cancelada.")
 
      # Necessidade específica da raça
     def esquentar(self):
