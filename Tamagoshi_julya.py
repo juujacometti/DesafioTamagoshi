@@ -1,15 +1,11 @@
-# COISAS FALTANTES 
-# definição das duas racas (yasme)
-# o benefício das outras 2 raças (yasme)
-# os desafios (função dormir realizada, falta a de acordar e linkar elas) (julya e yasme) 
-# definição de função de vida, tempo (yasme)
-# chamar todas as funções para funcionamento do jogo e incluir coisas que você alterar
+import json # Para salvar o histórico do bichinho no JSON
+
 
 # ====== Listas para o funcionamento do jogo ======
                     # Água            Terra               Ar                Fogo               
 listaBrincadeiras = ["Ir na piscina", "Castelo de areia", "Soltar pipa", "Jogar queimada", "Video game", "Cancelar escolha"]
 listaComidas = ["Gelatina", "Batata", "Pipoca", "Pimenta", "Sorvete", "Cancelar alimentação"]
-listaAcao = [f"Alimentar", "Brincar", "Passar o tempo", "Necessidade da raça", "Status do pet", "Sair (o pet irá dormir)"]
+listaAcao = [f"Alimentar", "Brincar", "Passar o tempo", "Necessidade da raça", "Status do pet", "Sair (o pet irá dormir)", "Apagar pet"]
 
 
 # ====== Classe mãe ======
@@ -19,7 +15,7 @@ class Tamagoshi:
         self.fome = 50 
         self.saude = 100
         self.idade = 0
-        self.tedio = 0
+        self.tedio = 50
         self.dormindo = False
         
     def statusPet(self):
@@ -35,11 +31,15 @@ class Tamagoshi:
             print(f"Calor: {self.calor}")
             
             
-    def acoes(self): 
+    def acoes(self):
         if isinstance(self, Aquati):
             listaAcao[3] = "4 - 💧 Hidratar"
         elif isinstance(self, Fuegui):
             listaAcao[3] = "4 - 🔥 Esquentar"
+        elif isinstance(self, Ari):
+            listaAcao[3] = "4 - 💨 Refrescar"
+        elif isinstance(self, Terru):
+            listaAcao[3] = "4 - 🌱 Conectar à Natureza"
         
         
         
@@ -100,17 +100,17 @@ class Tamagoshi:
     # Verifica a vida (ESTÁ IGUAL AO DA MARI, NÃO MEXI)
     # Diminui a saúde do bichinho conforme as condições de fome (quanto mais alta, pior)
     def vida(self):
-        if ((self.fome > 50 and self.fome <= 60)) or ((self.tedio > 50 and self.tedio <= 60)):
+        if 50 < self.fome <= 60 or 50 < self.tedio <= 60:
             self.saude -= 10
-        elif ((self.fome > 60 and self.fome <= 60)) or ((self.tedio > 60 and self.tedio <= 60)):
+        elif 60 < self.fome <= 80 or 60 < self.tedio <= 80:
             self.saude -= 30
-        elif ((self.fome > 80 and self.fome <= 90)) or ((self.tedio > 80 and self.tedio <= 60)):
+        elif 80 < self.fome <= 90 or 80 < self.tedio <= 90:
             self.saude -= 50
-        elif (self.fome > 90) or (self.tedio > 90):
+        elif self.fome > 90 or self.tedio > 90:
             print("Estou morrendo.......AHHHHHH 💀")
-        elif (self.fome > 99) or (self.tedio > 99):
             self.saude = 0
             print("Seu bichinho morreu ⚰️")
+
             
     
     # Verifica o passar do tempo (ESTÁ IGUAL AO DA MARI, NÃO MEXI)
@@ -123,105 +123,124 @@ class Tamagoshi:
 
 # ====== Criação de raças ======
 #Raça de água
-class Aquati(Tamagoshi): 
+class Aquati(Tamagoshi):
     def __init__(self, nome):
-        super().__init__(nome)    # Chamada do construtor da classe mãe  
-        self.hidratacao = 100    # Definição de atributos específicos da raça
+        super().__init__(nome)
+        self.hidratacao = 50  # Necessidade especial: hidratação
 
-    def brincar(self, escolhaBrincadeira):
-        if escolhaBrincadeira == 1:    # Brincadeira que envolve água diminui o tédio mais rápido
-            self.tedio = max(0, self.tedio - 30)    # Garante que o valor não seja negativo, caso fique, será substituído para zero
-            print(f"{self.nome} fez sua brincadeira favorita! 🤩")
-        elif escolhaBrincadeira in [2, 3, 4]:    # Brincadeiras 'favoritas' de outras raças
-            self.tedio = max(0, self.tedio - 15)
-        elif escolhaBrincadeira == 5:    # Brincadeira genérica
-            self.tedio = max(0, self.tedio - 10)
-        elif escolhaBrincadeira == 6:    # Cancelar escolha de brincadeiras
-            print("Brincadeira cancelada.")
-
-    def nadar(self):
-        self.tedio -= 15
-        self.hidratacao += 10
-        print(f"{self.nome} nadou e está mais feliz! 🐟")
-
-    # Necessidade específica da raça
+    # Função especial do Aquati
     def hidratar(self):
-        self.hidratacao += 25
-        print(f" {self.nome} bebeu água! 💧")
+        print(f"{self.nome} está se hidratando 💧...")
+        # Aumenta hidratação (não passa de 100)
+        self.hidratacao = min(100, self.hidratacao + 10)
+        # Reduz o tédio (não fica menor que 0)
+        self.tedio = max(0, self.tedio - 15)
+        print(f"Hidratação: {self.hidratacao}, Tédio: {self.tedio}")
 
 
-
-# Raça de fogo
 class Fuegui(Tamagoshi):
     def __init__(self, nome):
-        super().__init__(nome)    # Chamada do construtor da classe mãe
-        self.calor = 100    # Definição de atributos específicos da raça
+        super().__init__(nome)
+        self.calor = 50  # Necessidade especial: calor
 
-    def alimentar(self, escolhaComida):
-        if escolhaComida in [1, 2, 3]:
-            self.fome = max(0, self.fome - 15)
-        elif escolhaComida == 4:
-            self.fome = max(0, self.fome - 25)
-            print(f"{self.nome} comeu sua comida favorita! 🤩")
-        elif escolhaComida == 5:
-            self.fome = max(0, self.fome - 10)
-        elif escolhaComida == 6:
-            print("Alimentação cancelada.")
-
-     # Necessidade específica da raça
+    # Função especial do Fuegui
     def esquentar(self):
-        self.calor += 25
-        print(f"{self.nome} se esquentou e se sente melhor! ♨️")
-
-    def soltarFogo(self):
-        self.tedio -= 30
-        self.energia -= 20
-        print(f"{self.nome} soltou fogo! 🔥")
-
+        print(f"{self.nome} está absorvendo calor 🔥...")
+        # Aumenta o calor (limite 100)
+        self.calor = min(100, self.calor + 10)
+        # Diminui a fome (mínimo 0)
+        self.fome = max(0, self.fome - 10)
+        print(f"Calor: {self.calor}, Fome: {self.fome}")
 
 
-# Raça de ar
 class Ari(Tamagoshi):
     def __init__(self, nome):
         super().__init__(nome)
-        self.refrescancia = 20 # MUDAR!
+        self.refrescancia = 50  # Necessidade especial: refrescância
 
+    # Função especial do Ari
     def pipar(self):
-        self.refrescancia += 30
-        self.tedio = max(0, self.tedio - 20)  # Correr alivia o tédio | '0' é para que pare de tirar quando o tédio atingir 0
-        print(f"{self.nome} soltou pipa ao AR livre e se sente melhor! 🍃")
-
-    def planar(self):
-        self.tedio = max(0, self.tedio - 20)
-        self.idade += 0.5
-        print(f"{self.nome} planou no céu e se sente melhor! ☁️")
+        print(f"{self.nome} está sentindo a brisa do vento 💨...")
+        # Aumenta a refrescância (até 100)
+        self.refrescancia = min(100, self.refrescancia + 10)
+        # Recupera um pouco da saúde (até 100)
+        self.saude = min(100, self.saude + 5)
+        print(f"Refrescância: {self.refrescancia}, Saúde: {self.saude}")
 
 
-
-# Raça de terra
 class Terru(Tamagoshi):
     def __init__(self, nome):
         super().__init__(nome)
-        self.resistencia = 100  # Atributo especial da raça
+        self.resistencia = 50  # Necessidade especial: resistência
 
+    # Função especial do Terru
     def conexaoNatureza(self):
-        if self.fome <= 80:
-            self.saude = min(100, self.saude + 25)
-            self.tedio = max(0, self.tedio - 10)
-            print(f"{self.nome} se conectou com a natureza e se sente renovado! 🌱")
-        else:
-            print(f"{self.nome} está com fome demais para se concentrar! 🍽️")
+        print(f"{self.nome} está se conectando com a natureza 🌱...")
+        # Aumenta a resistência (até 100)
+        self.resistencia = min(100, self.resistencia + 10)
+        # Reduz bastante o tédio (mínimo 0)
+        self.tedio = max(0, self.tedio - 20)
+        print(f"Resistência: {self.resistencia}, Tédio: {self.tedio}")
 
 
-    def muralhaPedra(self):
-        self.saude = min(100, self.saude + 10)
-        self.idade = max(0, self.idade - 0.2)
-        print(f"{self.nome} criou uma muralha protetora e ganhou tempo! 🧱")
-        
-        
-# Raça de ar
-# Da um nome diferentinho pras raças 
+# Puxando para o JSON
+def salvar_estado(pet, nome_arquivo="pet.json"):
+    dados = {
+        "nome": pet.nome,
+        "fome": pet.fome,
+        "saude": pet.saude,
+        "idade": pet.idade,
+        "tedio": pet.tedio,
+        "dormindo": pet.dormindo,
+        "raca": pet.__class__.__name__,
+        "extra": {}
+    }
 
-# Raça de terra
+    if isinstance(pet, Aquati):
+        dados["extra"]["hidratacao"] = pet.hidratacao
+    elif isinstance(pet, Fuegui):
+        dados["extra"]["calor"] = pet.calor
+    elif isinstance(pet, Ari):
+        dados["extra"]["refrescancia"] = pet.refrescancia
+    elif isinstance(pet, Terru):
+        dados["extra"]["resistencia"] = pet.resistencia
 
-        
+    with open(nome_arquivo, "w") as arq:
+        json.dump(dados, arq, indent=4)
+
+
+
+def carregar_estado(nome_arquivo="pet.json"):
+    try:
+        with open(nome_arquivo, "r") as arq:
+            dados = json.load(arq)
+
+            nome = dados["nome"]
+            raca = dados["raca"]
+
+            if raca == "Aquati":
+                pet = Aquati(nome)
+                pet.hidratacao = dados["extra"]["hidratacao"]
+            elif raca == "Fuegui":
+                pet = Fuegui(nome)
+                pet.calor = dados["extra"]["calor"]
+            elif raca == "Ari":
+                pet = Ari(nome)
+                pet.refrescancia = dados["extra"]["refrescancia"]
+            elif raca == "Terru":
+                pet = Terru(nome)
+                pet.resistencia = dados["extra"]["resistencia"]
+            else:
+                return None
+
+            pet.fome = dados["fome"]
+            pet.saude = dados["saude"]
+            pet.idade = dados["idade"]
+            pet.tedio = dados["tedio"]
+            pet.dormindo = dados["dormindo"]
+
+            return pet
+
+    except FileNotFoundError:
+        return None
+ 
